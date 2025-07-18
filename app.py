@@ -1,11 +1,11 @@
 # --- app.py ---
 
-
+import os
 # Patch Railway environment manually (Streamlit subprocess may not inherit it)
 os.environ["SUPABASE_URL"] = os.getenv("SUPABASE_URL", "")
 os.environ["SUPABASE_KEY"] = os.getenv("SUPABASE_KEY", "")
 
-import os
+
 import streamlit as st
 from dotenv import load_dotenv
 from modules import auth, pdf_handler, vector_store
