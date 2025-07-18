@@ -16,6 +16,13 @@ import sqlite3
 from datetime import datetime
 import hashlib
 
+import os
+
+print("🧪 ENVIRONMENT DUMP START")
+for key, val in os.environ.items():
+    print(f"{key}: {val}")
+print("🧪 ENVIRONMENT DUMP END\n")
+
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
 
