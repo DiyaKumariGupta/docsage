@@ -4,7 +4,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from modules import auth, pdf_handler, vector_store
 from openai import OpenAI
-from pinecone import Pinecone
+import Pinecone
 from langchain.embeddings import OpenAIEmbeddings
 import sqlite3
 from datetime import datetime
