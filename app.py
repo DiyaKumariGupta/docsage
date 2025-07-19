@@ -45,7 +45,7 @@ if not st.session_state.authenticated:
     if not st.session_state.show_email_input:
         if st.button("Login"):
             st.session_state.show_email_input = True
-            st.experimental_rerun()
+            st.rerun()
     else:
         email_input = st.text_input("Enter your email")
         if st.button("Submit") and email_input:
