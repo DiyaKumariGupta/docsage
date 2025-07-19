@@ -4,5 +4,6 @@ pinecone
 supabase
 python-dotenv
 langchain
+langchain-community
 PyMuPDF
 tiktoken
