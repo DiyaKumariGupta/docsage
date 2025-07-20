@@ -4,7 +4,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from modules import auth, pdf_handler, vector_store
 from openai import OpenAI
-import pinecone
+from pinecone import Pinecone, ServerlessSpec
 from langchain.embeddings import OpenAIEmbeddings
 import sqlite3
 from datetime import datetime
@@ -116,11 +116,20 @@ if st.session_state.get("chunks_uploaded"):
             query_embedding = embedder.embed_query(query)
 
             # Pinecone lookup
-            pinecone.init(
-                api_key=os.getenv("PINECONE_API_KEY"),
-                environment=os.getenv("PINECONE_ENV")  # example: "us-east-1"
-            )
-            index = pinecone.Index("docsage-index")
+            pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+
+            # Check/create index
+            if 'my-index' not in pc.list_indexes().names():
+                pc.create_index(
+                    name='my-index',
+                    dimension=1536,
+                    metric='cosine',  # or 'euclidean' depending on your use
+                    spec=ServerlessSpec(
+                        cloud='aws',
+                        region='us-east-1'  # or your region
+                    )
+                )
+            index = pc.Index("docsage-index")
             namespace = st.session_state.get("last_namespace", "default")
             results = index.query(vector=query_embedding, top_k=3, include_metadata=True, namespace=namespace)            # Group results by document name
            
