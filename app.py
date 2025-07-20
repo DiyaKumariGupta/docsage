@@ -31,7 +31,7 @@ c.execute('''CREATE TABLE IF NOT EXISTS chat (
 conn.commit()
 
 
-# --- Authentication ---
+# Initialize session state keys
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
     st.session_state.email = None
@@ -39,23 +39,23 @@ if "authenticated" not in st.session_state:
 if "show_email_input" not in st.session_state:
     st.session_state.show_email_input = False
 
+# Login flow
 if "user" not in st.session_state:
     auth.login_form()
 else:
     user = st.session_state["user"]
-    st.success(f"Logged in as {user.email}")
-if st.button("Logout"):
-    # ✅ List of session keys to clear
-session_keys_to_clear = ["user", "pdf_data", "chat_history", "vectors", "index"]
+    st.success(f"Logged in as {user['email']}")
 
-    # ✅ Clear them from session_state
-for key in session_keys_to_clear:
-    if key in st.session_state:
-        del st.session_state[key]
+    # Logout button
+    if st.button("Logout"):
+        session_keys_to_clear = ["user", "pdf_data", "chat_history", "vectors", "index"]
+        for key in session_keys_to_clear:
+            if key in st.session_state:
+                del st.session_state[key]
+        st.rerun()
 
-    # ✅ Rerun the app to reflect logout
-st.rerun()
-st.write("✅ You are logged in. Show app content here.")   
+    # Main app content
+    st.write("✅ You are logged in. Show app content here.")  
 
 
 
