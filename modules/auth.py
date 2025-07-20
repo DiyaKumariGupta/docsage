@@ -5,27 +5,34 @@ import os
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 
-print("SUPABASE_URL (from secrets):", SUPABASE_URL)
-print("SUPABASE_KEY (from secrets):", SUPABASE_KEY)
-
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def login_form():
-    with st.sidebar:
-        st.markdown("### Optional Login")
-        email = st.text_input("Email", key="login_email")
-        password = st.text_input("Password", type="password", key="login_password")
-        if st.button("Login"):
-            try:
-                user = supabase.auth.sign_in_with_password({"email": email, "password": password})
+    st.subheader("Login")
+
+    with st.form("login_form"):
+        email = st.text_input("Email")
+        password = st.text_input("Password", type="password")
+        submit = st.form_submit_button("Login")
+
+    if submit:
+        if not email or not password:
+            st.warning("Please enter both email and password.")
+            return
+
+        try:
+            response = supabase.auth.sign_in_with_password({
+                "email": email,
+                "password": password
+            })
+
+            user = response.user
+            if user:
+                st.success(f"Welcome {user.email}!")
                 st.session_state["user"] = user
-                st.success("Logged in successfully!")
-            except Exception as e:
-                st.error("Login failed. Check your credentials.")
+                st.rerun()
+            else:
+                st.error("Login failed. Please check your credentials.")
 
-        if st.button("Logout"):
-            st.session_state["user"] = None
-            st.success("Logged out.")
-
-def is_authenticated():
-    return st.session_state.get("user", None) is not None
+        except Exception as e:
+            st.error(f"Login error: {e}")
