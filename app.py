@@ -44,18 +44,18 @@ if "user" not in st.session_state:
 else:
     user = st.session_state["user"]
     st.success(f"Logged in as {user.email}")
-   if st.button("Logout")
+if st.button("Logout")
     # ✅ List of session keys to clear
-    session_keys_to_clear = ["user", "pdf_data", "chat_history", "vectors", "index"]
+session_keys_to_clear = ["user", "pdf_data", "chat_history", "vectors", "index"]
 
     # ✅ Clear them from session_state
-    for key in session_keys_to_clear:
-        if key in st.session_state:
-            del st.session_state[key]
+for key in session_keys_to_clear:
+    if key in st.session_state:
+        del st.session_state[key]
 
     # ✅ Rerun the app to reflect logout
-    st.rerun()
-    st.write("✅ You are logged in. Show app content here.")   
+st.rerun()
+st.write("✅ You are logged in. Show app content here.")   
 
 
 
