@@ -52,7 +52,7 @@ if not st.session_state.authenticated:
             st.session_state.authenticated = True
             st.session_state.email = email_input
             st.success(f"Welcome, {email_input}!")
-            st.experimental_rerun()
+            st.rerun()
 else:
     st.markdown(f"✅ Logged in as `{st.session_state.email}`")
     if st.button("Logout"):
