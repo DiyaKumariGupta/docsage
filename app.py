@@ -39,22 +39,11 @@ if "authenticated" not in st.session_state:
 if "show_email_input" not in st.session_state:
     st.session_state.show_email_input = False
 
-if not st.session_state.authenticated:
-    st.subheader("🔐 Login to Save Your Chats")
-
-    if not st.session_state.show_email_input:
-        if st.button("Login"):
-            st.session_state.show_email_input = True
-            st.rerun()
-    else:
-        email_input = st.text_input("Enter your email")
-        if st.button("Submit") and email_input:
-            st.session_state.authenticated = True
-            st.session_state.email = email_input
-            st.success(f"Welcome, {email_input}!")
-            st.rerun()
+f "user" not in st.session_state:
+    auth.login_form()
 else:
-    st.markdown(f"✅ Logged in as `{st.session_state.email}`")
+    user = st.session_state["user"]
+    st.success(f"Logged in as {user.email}")
    if st.button("Logout"):
     # ✅ List of session keys to clear
     session_keys_to_clear = ["user", "pdf_data", "chat_history", "vectors", "index"]
@@ -66,6 +55,7 @@ else:
 
     # ✅ Rerun the app to reflect logout
     st.rerun()
+    st.write("✅ You are logged in. Show app content here.")   
 
 
 
