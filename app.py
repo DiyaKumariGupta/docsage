@@ -116,7 +116,7 @@ if st.session_state.get("chunks_uploaded"):
             query_embedding = embedder.embed_query(query)
 
             # Pinecone lookup
-            pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+            pc = pinecone(api_key=os.getenv("PINECONE_API_KEY"))
             index = pc.Index("docsage-index")
             namespace = st.session_state.get("last_namespace", "default")
             results = index.query(vector=query_embedding, top_k=3, include_metadata=True, namespace=namespace)            # Group results by document name
