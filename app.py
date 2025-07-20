@@ -44,7 +44,7 @@ if "user" not in st.session_state:
 else:
     user = st.session_state["user"]
     st.success(f"Logged in as {user.email}")
-if st.button("Logout")
+if st.button("Logout"):
     # ✅ List of session keys to clear
 session_keys_to_clear = ["user", "pdf_data", "chat_history", "vectors", "index"]
 
