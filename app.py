@@ -39,7 +39,7 @@ if "authenticated" not in st.session_state:
 if "show_email_input" not in st.session_state:
     st.session_state.show_email_input = False
 
-f "user" not in st.session_state:
+if "user" not in st.session_state:
     auth.login_form()
 else:
     user = st.session_state["user"]
