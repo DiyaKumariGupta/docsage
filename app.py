@@ -59,7 +59,7 @@ else:
         st.session_state.authenticated = False
         st.session_state.email = None
         st.session_state.show_email_input = False
-        st.experimental_rerun()
+        st.rerun()
 
 
 # --- PDF Upload and Chunking ---
